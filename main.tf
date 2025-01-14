@@ -22,12 +22,6 @@ variable "tfe_organization" {
   type        = string
 }
 
-variable "upstream_workspaces" {
-  description = "The number of upstream to create."
-  type        = number
-  default     = 5
-}
-
 variable "downstream_workspaces" {
   description = "The number of workspaces to create."
   type        = number
@@ -37,15 +31,14 @@ variable "downstream_workspaces" {
 module "upstream" {
   source = "github.com/benjamin-lykins/terraform-tfe-workspacer.git"
 
-  count = var.upstream_workspaces
-
-  workspace_name    = "upstream-${count.index}"
+  workspace_name    = "upstream-ws"
   organization      = var.tfe_organization
   working_directory = "./workspace-random"
   auto_apply        = true
+  force_delete = true
 
   tfvars = {
-    resource_count = 6
+    resource_count = 0
   }
 
   vcs_repo = {
@@ -64,12 +57,13 @@ module "downstream" {
   organization      = var.tfe_organization
   working_directory = "./workspace-random"
   auto_apply        = true
+  force_delete = true
 
-  run_trigger_source_workspaces = tolist([for i in module.upstream : i.workspace_name])
+  run_trigger_source_workspaces = ["upstream-ws"]
   run_trigger_auto_apply        = true
 
   tfvars = {
-    resource_count = 6
+    resource_count = 5
   }
 
   vcs_repo = {
@@ -79,12 +73,4 @@ module "downstream" {
   }
   
   depends_on = [ module.upstream ]
-}
-
-output "upstream_workspace_names" {
-  value = [for i in module.upstream : i.workspace_name]
-}
-
-output "downstream_workspace_names" {
-  value = [for i in module.downstream : i.workspace_name]
 }
