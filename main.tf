@@ -7,7 +7,6 @@ terraform {
   }
 }
 
-
 provider "tfe" {
   hostname     = var.tfe_hostname
   organization = var.tfe_organization
@@ -35,7 +34,7 @@ variable "downstream_workspaces" {
   default     = 5
 }
 
-module "upsteam" {
+module "upstream" {
   source = "github.com/benjamin-lykins/terraform-tfe-workspacer.git"
 
   count = var.upstream_workspaces
@@ -44,7 +43,6 @@ module "upsteam" {
   organization      = var.tfe_organization
   working_directory = "./workspace-random"
   auto_apply        = true
-  allow_destroy     = true
 
   tfvars = {
     resource_count = 6
@@ -67,7 +65,7 @@ module "downstream" {
   working_directory = "./workspace-random"
   auto_apply        = true
 
-  run_trigger_source_workspaces = [module.upstream.workspace_name]
+  run_trigger_source_workspaces = tolist([for i in module.upstream : i.workspace_name])
   run_trigger_auto_apply        = true
 
   tfvars = {
@@ -80,5 +78,13 @@ module "downstream" {
     oauth_token_id = "ot-hcFMM5ZhpaNrj4TH"
   }
   
-  depends_on = [ module.upsteam ]
+  depends_on = [ module.upstream ]
+}
+
+output "upstream_workspace_names" {
+  value = [for i in module.upstream : i.workspace_name]
+}
+
+output "downstream_workspace_names" {
+  value = [for i in module.downstream : i.workspace_name]
 }
