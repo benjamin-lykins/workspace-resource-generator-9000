@@ -37,6 +37,7 @@ module "workspacer" {
   organization      = var.tfe_organization
   working_directory = "./workspace-random"
   auto_apply        = true
+  run_trigger_source_workspaces = "workspace-resource-generator-9000"
 
   tfvars = {
     resource_count = 8
