@@ -29,8 +29,8 @@ variable "workspace_count" {
 }
 
 module "workspacer" {
-  source  = "alexbasista/workspacer/tfe"
-  version = "~> 0.0"
+  source  = "github.com/benjamin-lykins/terraform-tfe-workspacer.git"
+
 
   count             = var.workspace_count
   workspace_name    = "workspace-${count.index}"
@@ -38,7 +38,8 @@ module "workspacer" {
   working_directory = "./workspace-random"
   auto_apply        = true
   
-  run_trigger_source_workspaces = ["workspace-resource-generator-9000"]
+#   run_trigger_source_workspaces = ["workspace-resource-generator-9000"]
+  run_trigger_auto_apply = true
 
   tfvars = {
     resource_count = 6
