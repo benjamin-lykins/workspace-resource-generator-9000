@@ -28,15 +28,6 @@ variable "workspace_count" {
   default     = 5
 }
 
-variable "github_app_name" {
-  description = "Name of the Github user or organization account that installed the app."
-  type        = string
-}
-
-data "tfe_github_app_installation" "gha_installation" {
-  name = var.github_app_name
-}
-
 module "workspacer" {
   source  = "alexbasista/workspacer/tfe"
   version = "~> 0.0"
@@ -50,7 +41,7 @@ module "workspacer" {
   vcs_repo = {
     identifier                 = "benjamin-lykins/workspace-resource-generator-9000"
     branch                     = "main"
-    github_app_installation_id = data.tfe_github_app_installation.gha_installation.id
+    oauth_token_id             = "ot-hcFMM5ZhpaNrj4TH"
   }
 }
 
