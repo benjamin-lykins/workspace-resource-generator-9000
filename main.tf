@@ -36,13 +36,16 @@ module "workspacer" {
   workspace_name    = "workspace-${count.index}"
   organization      = var.tfe_organization
   working_directory = "./workspace-random"
-  auto_apply = true
+  auto_apply        = true
 
+  tfvars = {
+    resource_count = 8
+  }
 
   vcs_repo = {
-    identifier                 = "benjamin-lykins/workspace-resource-generator-9000"
-    branch                     = "main"
-    oauth_token_id             = "ot-hcFMM5ZhpaNrj4TH"
+    identifier     = "benjamin-lykins/workspace-resource-generator-9000"
+    branch         = "main"
+    oauth_token_id = "ot-hcFMM5ZhpaNrj4TH"
   }
 }
 
