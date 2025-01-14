@@ -50,7 +50,7 @@ module "workspacer" {
   vcs_repo = {
     identifier                 = "benjamin-lykins/workspace-resource-generator-9000"
     branch                     = "main"
-    github_app_installation_id = data.github_app_name.id
+    github_app_installation_id = data.tfe_github_app_installation.gha_installation.id
   }
 }
 
