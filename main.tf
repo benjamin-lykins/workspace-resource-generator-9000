@@ -18,7 +18,6 @@ terraform {
 provider "tfe" {
   hostname     = var.tfe_hostname
   organization = var.tfe_organization
-  token        = var.tfe_token
 }
 
 variable "tfe_hostname" {
@@ -29,12 +28,6 @@ variable "tfe_hostname" {
 variable "tfe_organization" {
   description = "The organization to create the workspaces in."
   type        = string
-}
-
-variable "tfe_token" {
-    description = "The token to authenticate with the Terraform Enterprise instance."
-    type        = string
-    sensitive = true  
 }
 
 variable "workspace_count" {
