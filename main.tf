@@ -38,7 +38,7 @@ module "workspacer" {
   working_directory = "./workspace-random"
   auto_apply        = true
   
-#   run_trigger_source_workspaces = ["workspace-resource-generator-9000"]
+  run_trigger_source_workspaces = ["workspace-resource-generator-9000"]
   run_trigger_auto_apply = true
 
   tfvars = {
