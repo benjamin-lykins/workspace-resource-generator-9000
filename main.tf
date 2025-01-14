@@ -36,6 +36,7 @@ module "workspacer" {
   workspace_name    = "workspace-${count.index}"
   organization      = var.tfe_organization
   working_directory = "./workspace-random"
+  auto_apply = true
 
 
   vcs_repo = {
