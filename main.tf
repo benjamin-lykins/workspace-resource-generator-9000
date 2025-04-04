@@ -1,4 +1,12 @@
 terraform {
+  cloud {
+    hostname = "tfe-failover.benjamin-lykins.sbx.hashidemos.io"
+    organization = "failover"
+    workspaces {
+      name = "demo-workspace-tfe"
+    }
+  }
+
   required_providers {
     random = {
       source  = "hashicorp/random"
@@ -12,7 +20,7 @@ provider "random" {}
 
 variable "resource_count" {
   type    = number
-  default = 5
+  default = 7
 
 }
 
