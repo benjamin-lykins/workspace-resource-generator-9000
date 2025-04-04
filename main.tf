@@ -20,7 +20,7 @@ provider "random" {}
 
 variable "resource_count" {
   type    = number
-  default = 5
+  default = 6
 
 }
 
